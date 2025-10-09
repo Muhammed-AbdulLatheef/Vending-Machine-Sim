@@ -10,6 +10,7 @@
 void buyItem(int item);
 void displayItems(void);
 void adminMode(void);
+int payItem(int item);
 
 float priceA = 1.5;
 float priceB = 5.0;
@@ -78,11 +79,49 @@ return 0;
 void buyItem(int item){
      printf("\n------------------------------\n");
      printf("Buying Item...");
-     int qtyBuy;
      printf("Enter The quantity to Buy:");
-     scanf("%d", &qtyBuy);
-    
+    switch (item)
+    {
+        case 1:
+            printf("Confirm to Buy CocaCola for %d", priceA);
+            break;
+        case 2:
+            printf("Confirm to Buy Water Can for %d", priceB);
+            break;
+        case 3: 
+            printf("Confirm to Buy Pringles for %d", priceC);
+            break;
+        default:
+            printf("Invalid Choice");  
+    }
+    char choice;
+    scanf("%d",&choice);
+    if (choice == 'y')
+    {
+        int payConfirm = payItem(item);
+        if (payConfirm == 1){
+            printf("\n==============================\n");
+            printf("Payment Successful");
+            switch (item)
+            {
+                case 1:
+                    QtyA -= 1;
+                    break;
+                case 2:
+                    QtyB -= 1;
+                    break;
+                case 3: 
+                    QtyC -= 1;
+                    break;
+                default:
+                    printf("Error");  
+            }
+            printf("Thank you for your purchase");
 
+            
+        }
+    }
+    
 
 }
 
@@ -94,4 +133,8 @@ void displayItems(void)
     printf("|  2 | WaterCan | %8.1f | %8.1d |\n", priceB, QtyB);
     printf("|  3 | Pringles | %8.1f | %8.1d |\n", priceC, QtyC);
     printf("+----+----------+----------+----------+\n");
+}
+
+int payItem(int item){
+
 }
