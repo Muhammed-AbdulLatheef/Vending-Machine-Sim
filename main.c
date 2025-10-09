@@ -48,7 +48,7 @@ int main() {
             scanf("%d", pass);
             if (pass == adminPassword)
             {
-                adminMode();
+                /*adminMode();*/
             } else
             {
                 printf("\nIncorrect Password");
