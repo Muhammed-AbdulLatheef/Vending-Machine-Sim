@@ -136,5 +136,41 @@ void displayItems(void)
 }
 
 int payItem(int item){
-
+    float itemAmount;
+    float coin;
+    float payAmount;
+    int change;
+    switch (item)
+            {
+                case 1:
+                    itemAmount = priceA;
+                    break;
+                case 2:
+                    itemAmount = priceB;
+                    break;
+                case 3: 
+                    itemAmount = priceC;
+                    break;
+                default:
+                    printf("Invalid Item");  
+            }
+    printf("\n==============================\n");
+    printf("Welcome to the Payment Portal");
+    while (coin < itemAmount)
+    {
+        printf("Enter Coins(1.0, 0.50, 0.25) : \n")
+        scanf("%f", &coin);
+        if(coin != 1 || coin != 0.25 || coin != 0.5){
+        printf("Enter Correct Amount(1/0.5/0.25)")
+        } 
+        else
+        {
+            payAmount += coin;
+            change = ff
+            
+        }
+        
+    }
+    
+    
 }
