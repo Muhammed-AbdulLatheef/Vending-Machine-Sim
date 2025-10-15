@@ -36,16 +36,12 @@ int main() {
         {
         case 1:
             
-            while (!flag)
-            {
                 displayItems();
                 printf("Enter the Number of the Product you want to buy: ");
                 int item; 
                 scanf("%d", &item);
                 buyItem(item);
-            }
-            
-
+        
             
         case 2:
             printf("\n==============================\n");
@@ -79,7 +75,6 @@ return 0;
 void buyItem(int item){
      printf("\n------------------------------\n");
      printf("Buying Item...");
-     printf("Enter The quantity to Buy:");
     switch (item)
     {
         case 1:
@@ -139,7 +134,7 @@ int payItem(int item){
     float itemAmount;
     float coin;
     float payAmount;
-    int change;
+    float change;
     switch (item)
             {
                 case 1:
@@ -158,19 +153,36 @@ int payItem(int item){
     printf("Welcome to the Payment Portal");
     while (coin < itemAmount)
     {
-        printf("Enter Coins(1.0, 0.50, 0.25) : \n")
+        printf("Enter Coins(1.0, 0.50, 0.25 or -1 to Cancel Payment) : \n");
         scanf("%f", &coin);
         if(coin != 1 || coin != 0.25 || coin != 0.5){
-        printf("Enter Correct Amount(1/0.5/0.25)")
+        printf("Enter Correct Amount(1/0.5/0.25)");
         } 
+        else if (coin == -1)
+        {
+            return 0;
+        }
+        
         else
         {
             payAmount += coin;
-            change = ff
-            
+            change = itemAmount - payAmount;
+            if (change > 0)
+            {
+                printf("%f to be paid...");
+            } 
+            else if (change == 0)
+            {
+                printf("Payment Completed...");
+                return 1;
+            }
+            else{
+                printf("Payment Completed... \nChange to be given: %f", change);
+                return 1;
+            }  
         }
         
     }
-    
+    return 0;
     
 }
