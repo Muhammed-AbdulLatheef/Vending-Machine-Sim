@@ -9,9 +9,10 @@
 
 void buyItem(int item);
 void displayItems(void);
-void adminMode(void);
+int adminMode(void);
 int payItem(int item);
 
+float totalAmount;
 float priceA = 1.5;
 float priceB = 5.0;
 float priceC = 4.5;
@@ -51,7 +52,12 @@ int main() {
             scanf("%d", &pass);
             if (pass == adminPassword)
             {
-                /*adminMode();*/
+                int loop = 1;
+                while (loop != 0)
+                {
+                    loop = adminMode();
+                }
+                
             } else
             {
                 printf("\nIncorrect Password");
@@ -115,6 +121,11 @@ void buyItem(int item){
 
             
         }
+        else
+        {
+            printf("\nPayment Unsuccessefull");
+        }
+        
     }
     
 
@@ -128,6 +139,12 @@ void displayItems(void)
     printf("|  2 | WaterCan | %8.1f | %8.1d |\n", priceB, QtyB);
     printf("|  3 | Pringles | %8.1f | %8.1d |\n", priceC, QtyC);
     printf("+----+----------+----------+----------+\n");
+
+    if (QtyA == lowA || QtyB == lowB || QtyC == lowC)
+    {
+        printf("\nItem in low quantity");
+    }
+    
 }
 
 int payItem(int item){
@@ -169,20 +186,79 @@ int payItem(int item){
             change = itemAmount - payAmount;
             if (change > 0)
             {
-                printf("%f to be paid...");
+                printf("\n%f to be paid...");
             } 
             else if (change == 0)
             {
-                printf("Payment Completed...");
+                printf("\nPayment Completed...");
                 return 1;
+                totalAmount += payAmount;
             }
             else{
-                printf("Payment Completed... \nChange to be given: %f", change);
+                printf("\nPayment Completed... \nChange to be given: %f", change);
                 return 1;
+                totalAmount += payAmount;
             }  
         }
         
     }
     return 0;
     
+}
+
+int adminMode(void){
+    int choice;
+    printf("\n------------------------------\n");
+    printf("***ADMIN MODE***\n");
+    printf("Welcome to the Vending Machine\n");
+    printf(" 1-> Replenish Products \n 2-> Change Product Prices \n 3-> : Display the total sale amount\n 4-> Display the number of items of each product in the machine\n 0-> Exit Admin Mode");
+    printf("\nEnter your Desired Choice: ");
+    scanf("%d", &choice);
+    switch (choice)
+    {
+        case 1:
+            printf("Confirm to Buy CocaCola for %d", priceA);
+            break;
+        case 2:
+            int product;
+            int newqty;
+            printf("|  1 | CocaCola |\n");
+            printf("|  2 | WaterCan |\n");
+            printf("|  3 | Pringles |\n");
+            printf("Choose the product you want to change the price of : ");
+            scanf("%d", &product);
+            printf("Choose the Quantity you want to update to:");
+            scanf("%d", &newqty);
+            switch (product)
+            {
+                case 1:
+                    QtyA = newqty;
+                    break;
+                case 2:
+                    QtyB = newqty;
+                    break;
+                case 3: 
+                    QtyC = newqty;
+                    break;
+                default:
+                    printf("Invalid Item");  
+            }
+            break;
+        case 3: 
+            int c;
+            printf("\nThe total Sale Amount is: %d", totalAmount);
+            printf("Do you want to reset the Sale amount?:");
+            scanf("%d",&c);
+            if(c == 'y'){
+                totalAmount = 0;
+            }
+            break;
+        case 4:
+            displayItems();
+        case 0:
+            return 0;
+        default:
+            printf("\nInvalid Choice");  
+    }
+return 1;
 }
