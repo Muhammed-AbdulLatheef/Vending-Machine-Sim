@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdbool.h>
+#include <stdlib.h>
 
 
 #define lowA 2
@@ -11,8 +11,11 @@ void buyItem(int item);
 void displayItems(void);
 int adminMode(void);
 int payItem(int item);
+void replenishStock(void);
+void changePrice(void);
+void saleAmount(void);
 
-float totalAmount;
+float totalAmount = 2;
 float priceA = 1.5;
 float priceB = 5.0;
 float priceC = 4.5;
@@ -23,7 +26,7 @@ int QtyC = 10;
 
 
 int main() {
-    bool flag = false;
+    
     while (1)
     {
         int choice;
@@ -42,6 +45,7 @@ int main() {
                 int item; 
                 scanf("%d", &item);
                 buyItem(item);
+                break;
         
             
         case 2:
@@ -58,7 +62,8 @@ int main() {
                     loop = adminMode();
                 }
                 
-            } else
+            } 
+            else
             {
                 printf("\nIncorrect Password");
                 continue;
@@ -80,29 +85,30 @@ return 0;
 
 void buyItem(int item){
      printf("\n------------------------------\n");
-     printf("Buying Item...");
+     printf("Buying Item...\n");
     switch (item)
     {
         case 1:
-            printf("Confirm to Buy CocaCola for %d", priceA);
+            printf("Confirm to Buy CocaCola for %f : ", priceA);
             break;
         case 2:
-            printf("Confirm to Buy Water Can for %d", priceB);
+            printf("Confirm to Buy Water Can for %f : ", priceB);
             break;
         case 3: 
-            printf("Confirm to Buy Pringles for %d", priceC);
+            printf("Confirm to Buy Pringles for %f : ", priceC);
             break;
         default:
             printf("Invalid Choice");  
+            break;
     }
     char choice;
-    scanf("%d",&choice);
+    scanf(" %c",&choice);
     if (choice == 'y')
     {
         int payConfirm = payItem(item);
         if (payConfirm == 1){
             printf("\n==============================\n");
-            printf("Payment Successful");
+            printf("Payment Successful\n");
             switch (item)
             {
                 case 1:
@@ -170,10 +176,11 @@ int payItem(int item){
     printf("Welcome to the Payment Portal");
     while (coin < itemAmount)
     {
-        printf("Enter Coins(1.0, 0.50, 0.25 or -1 to Cancel Payment) : \n");
+        printf("\nEnter Coins(1.0, 0.50, 0.25 or -1 to Cancel Payment) : \n");
         scanf("%f", &coin);
-        if(coin != 1 || coin != 0.25 || coin != 0.5){
-        printf("Enter Correct Amount(1/0.5/0.25)");
+        if(coin != 1.000000 && coin != 0.250000 && coin != 0.500000){
+        	printf("Enter Correct Amount(1/0.5/0.25)");
+        	printf("%f", coin);
         } 
         else if (coin == -1)
         {
@@ -186,18 +193,18 @@ int payItem(int item){
             change = itemAmount - payAmount;
             if (change > 0)
             {
-                printf("\n%f to be paid...");
+                printf("\n%f to be paid...",change);
             } 
             else if (change == 0)
             {
                 printf("\nPayment Completed...");
-                return 1;
                 totalAmount += payAmount;
+                return 1;
             }
             else{
                 printf("\nPayment Completed... \nChange to be given: %f", change);
-                return 1;
                 totalAmount += payAmount;
+                return 1;
             }  
         }
         
@@ -211,54 +218,69 @@ int adminMode(void){
     printf("\n------------------------------\n");
     printf("***ADMIN MODE***\n");
     printf("Welcome to the Vending Machine\n");
-    printf(" 1-> Replenish Products \n 2-> Change Product Prices \n 3-> : Display the total sale amount\n 4-> Display the number of items of each product in the machine\n 0-> Exit Admin Mode");
+    printf(" 1-> Replenish Products \n 2-> Change Product Prices \n 3-> Display the total sale amount\n 4-> Display the number of items of each product in the machine\n 0-> Exit Admin Mode");
     printf("\nEnter your Desired Choice: ");
     scanf("%d", &choice);
     switch (choice)
     {
         case 1:
-            printf("Confirm to Buy CocaCola for %d", priceA);
+            replenishStock();
             break;
         case 2:
-            int product;
-            int newqty;
-            printf("|  1 | CocaCola |\n");
-            printf("|  2 | WaterCan |\n");
-            printf("|  3 | Pringles |\n");
-            printf("Choose the product you want to change the price of : ");
-            scanf("%d", &product);
-            printf("Choose the Quantity you want to update to:");
-            scanf("%d", &newqty);
-            switch (product)
-            {
-                case 1:
-                    QtyA = newqty;
-                    break;
-                case 2:
-                    QtyB = newqty;
-                    break;
-                case 3: 
-                    QtyC = newqty;
-                    break;
-                default:
-                    printf("Invalid Item");  
-            }
+            changePrice();
             break;
         case 3: 
-            int c;
-            printf("\nThe total Sale Amount is: %d", totalAmount);
-            printf("Do you want to reset the Sale amount?:");
-            scanf("%d",&c);
-            if(c == 'y'){
-                totalAmount = 0;
-            }
+            saleAmount();
             break;
         case 4:
             displayItems();
+            break;
         case 0:
             return 0;
         default:
             printf("\nInvalid Choice");  
     }
 return 1;
+}
+
+void replenishStock(void){
+    QtyA = rand() %10;
+    QtyB = rand() %10;
+    QtyC = rand() %10;
+    printf("Items replenished Successfully");
+}
+void changePrice(void){
+    int product;
+    float newqty;
+    printf("|  1 | CocaCola |\n");
+    printf("|  2 | WaterCan |\n");
+    printf("|  3 | Pringles |\n");
+    printf("Choose the product you want to change the price of : ");
+    scanf(" %d", &product);
+    printf("\nChoose the price you want to update to:");
+    scanf(" %f", &newqty);
+    switch (product)
+    {
+        case 1:
+            printf("%f",newqty);
+            priceA = newqty;
+            break;
+        case 2:
+            priceB = newqty;
+            break;
+        case 3: 
+            priceC = newqty;
+            break;
+        default:
+            printf("Invalid Item");  
+    }
+}
+void saleAmount(void){
+    int c;
+    printf("\nThe total Sale Amount is: %d", totalAmount);
+    printf("\nDo you want to reset the Sale amount?:");
+    scanf(" %c",&c);
+    if(c == 'y'){
+        totalAmount = 0;
+    }
 }
