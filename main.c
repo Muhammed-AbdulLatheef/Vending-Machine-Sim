@@ -7,7 +7,7 @@
 #define lowC 2
 #define adminPassword 1122
 
-// Prototypes 
+// Prototypes for functions
 void buyItem(int item);
 void displayItems(void);
 int adminMode(void);
@@ -22,12 +22,12 @@ float priceA = 1.5;
 float priceB = 5.0;
 float priceC = 4.5;
 
-// Quantity Variables
+// Quantity Variables of products
 int QtyA = 10;
 int QtyB = 15;
 int QtyC = 10;
 
-// Main Function
+// Main Function: contains the Main menu functions which call other functions
 int main() {
     
     while (1)
@@ -41,7 +41,7 @@ int main() {
         // Menu Switch
         switch (choice)
         {
-        // Purchase a product
+        // Purchase a product: User chooses to buy the product
         case 1: 
             
                 displayItems(); //display function called
@@ -51,7 +51,7 @@ int main() {
                 buyItem(item); // buy function called
                 break;
         
-        // Admin Mode   
+        // Admin Mode : Admin mode menu. Calls the Admin mode function 
         case 2:
             printf("\n==============================\n");
             printf("=== Admin Mode ===\n");
@@ -76,7 +76,7 @@ int main() {
         case 3:
             printf("\nExiting program....");
             printf("\n==============================\n");
-            break;
+            return 0;
 
         default:
             printf("Invalid Choice");
@@ -87,7 +87,7 @@ int main() {
 return 0;
 }
 
-// Buy Function
+// Buy Function: It has all the function calls that helps in buying the product including Displaying the Product details and Payment functions.
 void buyItem(int item){
      printf("\n------------------------------\n");
      printf("Buying Item...\n");
@@ -141,7 +141,7 @@ void buyItem(int item){
     
 
 }
-
+//Display function: It displays the products and its informations
 void displayItems(void)
 {
     printf("\n+----+----------+----------+----------+\n");
@@ -157,7 +157,7 @@ void displayItems(void)
     }
     
 }
-// Payment function
+// Payment function: The function ensures the payment is done successfully. returns 1 if successful, 0 if unseccesful
 int payItem(int item){
     float itemAmount;
     float coin;
@@ -190,6 +190,7 @@ int payItem(int item){
         } 
         else if (coin == -1)
         {
+            printf("Thank You, Collect balance.. %f ", payAmount);
             return 0;
         }
         
@@ -219,7 +220,7 @@ int payItem(int item){
     
 }
 
-// Admin mode menu
+// Admin mode menu function, contains all functions for the admin
 int adminMode(void){
     int choice;
     printf("\n------------------------------\n");
@@ -228,7 +229,7 @@ int adminMode(void){
     printf(" 1-> Replenish Products \n 2-> Change Product Prices \n 3-> Display the total sale amount\n 4-> Display the number of items of each product in the machine\n 0-> Exit Admin Mode");
     printf("\nEnter your Desired Choice: ");
     scanf("%d", &choice);
-    // menu function calls
+    // menu function calls for each admin functions
     switch (choice)
     {
         case 1:
@@ -251,7 +252,7 @@ int adminMode(void){
 return 1;
 }
 
-//replenish stock
+//replenish stock function.
 void replenishStock(void){
     QtyA = rand() %10;
     QtyB = rand() %10;
